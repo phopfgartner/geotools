@@ -188,12 +188,16 @@ public class FeatureTypeBinding extends AbstractComplexBinding {
     }
     
     public Object getProperty(Object object, QName name) throws Exception {
-    	if( object instanceof FeatureCollection){
-    		FeatureCollection features = (FeatureCollection) object;
-    		if ( "id".equals( name.getLocalPart() ) ) {
-                return features.getID(); 
-            }    		
-    	}
+        if (object instanceof FeatureCollection) {
+            FeatureCollection features = (FeatureCollection) object;
+            if ("id".equals(name.getLocalPart())) {
+                try {
+                    return features.getID();
+                } catch(UnsupportedOperationException e) {
+                    return object;
+                }
+            }
+        }
     	if( object instanceof SimpleFeature){
 	        SimpleFeature feature = (SimpleFeature) object;
 	        
